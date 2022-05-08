@@ -4,11 +4,15 @@ import AddNew from "./addNew";
 import {connect} from "react-redux";
 import {hideNewsAC, reverseAC} from "./newsReducer";
 
+
+
+
 function UseData(props) {
     const [news] = useData(props.data)
     const mappedNews = news.map((news, index) => (index === 0)
         ? {...news, isOpened: true, id: index + 1}
         : {...news, isOpened: false, id: index + 1})
+
 
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(false)
@@ -39,7 +43,8 @@ function UseData(props) {
 
     function hideShow(id, isOpened) {
 /* setData([...data].map(el => el.id === id ? {...el, isOpened: !isOpened} : el))*/
-        props.hideNewsAC(id, isOpened)
+        hideNewsAC(id, isOpened)
+        console.log(id)
     }
 
     function onReverseHandler(isOpened) {
@@ -49,12 +54,12 @@ function UseData(props) {
     }
 
     const onResetHandler = () => {
-        setData(news)
+        setData(mappedNews)
     }
 
     const onShowNewsHandler = () => {
         setShow(!show)
-        setData(news)
+        setData(mappedNews)
     }
 
     const searchNews = (event) => {
@@ -102,7 +107,7 @@ function UseData(props) {
 
 
 const mapStateToProps = (state)=> ( {
-    news: state.news
+    dataStore: state.newsStore
 })
 
 

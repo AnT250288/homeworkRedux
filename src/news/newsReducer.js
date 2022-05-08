@@ -5,16 +5,19 @@ const initialState = {
 const newsReducer = (state = initialState, action) => {
     switch (action.type) {
         case "HIDE_SHOW":
+            console.log(initialState)
             return {
                 ...initialState
-                    .map(el => el.id === id
-                        ? {...el, isOpened: !isOpened}
+                    .map(el => el.id === action.id
+                        ? {...el, isOpened: !action.isOpened}
                         : el)
             }
+
+
         case "REVERSE-NEWS":
             return {
                 ...initialState.reverse()
-                    .map(el => el.isOpened !== isOpened)
+                    .map(el => el.isOpened !== action.isOpened)
             }
 
         default:

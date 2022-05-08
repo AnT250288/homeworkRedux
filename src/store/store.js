@@ -3,7 +3,7 @@ import {combineReducers, createStore} from "redux";
 
 
 export const rootReducer = combineReducers({
-    news: newsReducer
+    newsStore: newsReducer
 })
 
 export const store = createStore(rootReducer)
