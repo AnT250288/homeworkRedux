@@ -9,13 +9,14 @@ export function useData() {
     useEffect(() => {
         async function fetchData() {
             setError('')
-            setLoading(true)
+
             const response = await fetch(`https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=${apiKey}`)
                 .then((res) => res.json())
                 .catch((error) => {
                     const msg = error.message
                     setError(msg)
                 })
+            setLoading(true)
             setData(response.articles)
         }
 

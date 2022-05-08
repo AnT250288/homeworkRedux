@@ -1,5 +1,5 @@
 import './App.css';
-import {UseData} from "./news/news";
+import UseData from "./news/news";
 
 function App() {
   return (

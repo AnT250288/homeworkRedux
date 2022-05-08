@@ -2,7 +2,7 @@ import React from "react";
 import {useState} from "react";
 
 
-export const AddNew = (props) => {
+const AddNew = (props) => {
     const [title, setTitle] = useState('')
     const [desc, setDisc] = useState('')
     const [photo, setPhoto] = useState('')
@@ -36,3 +36,5 @@ export const AddNew = (props) => {
         </div>
     )
 }
+
+export default AddNew

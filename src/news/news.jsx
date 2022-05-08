@@ -1,8 +1,10 @@
 import React, {useState} from "react";
-import {AddNew} from "./addNew";
 import {useData} from "./newsApi";
+import AddNew from "./addNew";
+import {connect} from "react-redux";
+import {hideNewsAC, reverseAC} from "./newsReducer";
 
-export function UseData(props) {
+function UseData(props) {
     const [news] = useData(props.data)
     const mappedNews = news.map((news, index) => (index === 0)
         ? {...news, isOpened: true, id: index + 1}
@@ -12,7 +14,6 @@ export function UseData(props) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
     const [show, setShow] = useState(false)
-
 
     /*   const apiKey = '720d710a8ab94e45bb76d573235a5b88'
        useEffect(() => {
@@ -36,21 +37,9 @@ export function UseData(props) {
            fetchData()
        }, [])*/
 
-
     function hideShow(id, isOpened) {
-        setData([...data].map(el => el.id === id ? {...el, isOpened: !isOpened} : el))
-    }
-
-    const searchNews = (event) => {
-        const searchingElement = event.target.value
-        const filteredNews = [...data].filter((val) => {
-            return val.title.toLowerCase().includes(searchingElement.toLowerCase())
-        })
-        if (searchingElement === '') {
-            setData([...data])
-        } else {
-            setData(filteredNews)
-        }
+/* setData([...data].map(el => el.id === id ? {...el, isOpened: !isOpened} : el))*/
+        props.hideNewsAC(id, isOpened)
     }
 
     function onReverseHandler(isOpened) {
@@ -66,6 +55,18 @@ export function UseData(props) {
     const onShowNewsHandler = () => {
         setShow(!show)
         setData(news)
+    }
+
+    const searchNews = (event) => {
+        const searchingElement = event.target.value
+        const filteredNews = [...data].filter((val) => {
+            return val.title.toLowerCase().includes(searchingElement.toLowerCase())
+        })
+        if (searchingElement === '') {
+            setData([...data])
+        } else {
+            setData(filteredNews)
+        }
     }
 
     return (
@@ -95,7 +96,17 @@ export function UseData(props) {
                     </div>
                 </div>}
 
-
         </>
     )
 }
+
+
+const mapStateToProps = (state)=> ( {
+    news: state.news
+})
+
+
+export default connect(
+    mapStateToProps,
+    {hideNewsAC, reverseAC}
+)(UseData)
